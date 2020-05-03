@@ -2,9 +2,10 @@ const {mongoose} = require('./mongoose');
 
 const User = mongoose.model('User', {
     _id: String,
-	username: { type: String, unique: true },
+	username: String,
 	bio: String,
-	email: String,
+	profile_pic: String,
+	email: { type: String, unique: true },
 	skills: Array,
 	projects: Array
 });

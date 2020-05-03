@@ -44,6 +44,7 @@ app.post("/users", (req, res) => {
         _id: req.body.uid,
 		username: req.body.username,
 		bio: req.body.bio,
+		profile_pic: "",
 		email: req.body.email,
 		skills: req.body.skills,
 		projects: []
@@ -54,6 +55,16 @@ app.post("/users", (req, res) => {
 	}).catch(e => {
         res.send(e);
     });
+});
+
+app.delete("/users/:id", (req, res) => {
+	var _id = req.params.id;
+
+	User.find({_id}).remove().then(doc => {
+		res.send(doc);
+	}).catch(e => {
+		res.send(e);
+	});
 });
 
 app.listen(port, () => {
