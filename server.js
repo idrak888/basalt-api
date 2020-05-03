@@ -21,7 +21,40 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-//calls go here...
+app.get("/users", (req, res) => {
+	User.find().then(doc => {
+        res.send(doc);
+    }).catch(e => {
+		res.send(e);
+	});
+});
+
+app.get("/users/:id", (req, res) => {
+	var _id = req.params.id;
+ 
+	User.find({_id}).then(doc => {
+		res.send(doc);
+	}).catch(e => {
+		res.send(e);
+	});
+});
+
+app.post("/users", (req, res) => {
+	var NewUser = new User({
+        _id: req.body.uid,
+		username: req.body.username,
+		bio: req.body.bio,
+		email: req.body.email,
+		skills: req.body.skills,
+		projects: []
+	});
+
+	NewUser.save().then((doc) => {
+		res.send(doc);
+	}).catch(e => {
+        res.send(e);
+    });
+});
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
