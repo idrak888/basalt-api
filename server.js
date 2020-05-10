@@ -43,10 +43,10 @@ app.post("/users", (req, res) => {
 	var NewUser = new User({
         _id: req.body.uid,
 		username: req.body.username,
-		bio: req.body.bio,
+		bio: "",
 		profile_pic: "",
 		email: req.body.email,
-		skills: req.body.skills,
+		skills: [],
 		projects: []
 	});
 
