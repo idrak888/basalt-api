@@ -46,8 +46,12 @@ app.post("/users", (req, res) => {
 		bio: req.body.bio,
 		profile_pic: "",
 		email: req.body.email,
-		skills: req.body.skills,
-		projects: []
+		skills: [
+			"Display your skills/professions here (use the green 'plus' button)"
+		],
+		projects: [
+			{name: "Join an existing project or create a new one as an admin", _id: '', activeBugs: ''}
+		]
 	});
 
 	NewUser.save().then((doc) => {
