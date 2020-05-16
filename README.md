@@ -1,4 +1,4 @@
-<h1><img src="https://firebasestorage.googleapis.com/v0/b/basalt-1ad57.appspot.com/o/assets%2Fbasalt-icon.png?alt=media&token=686ff6e2-5af1-4648-a135-084a848dac74" width="30"/> Basalt</h1>
+<img src="https://firebasestorage.googleapis.com/v0/b/basalt-1ad57.appspot.com/o/assets%2Flogo.png?alt=media&token=bad5d139-0d01-4c9b-adc1-6fa6e2c842e1" width="200"/>
 Endpoints: <a href="https://basalt-api.herokuapp.com/">https://basalt-api.herokuapp.com/</a>
 <h3>Bug tracker</h3>
 
