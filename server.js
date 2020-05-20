@@ -21,6 +21,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
+//get all users
 app.get("/users", (req, res) => {
 	User.find().then(doc => {
         res.send(doc);
@@ -29,6 +30,7 @@ app.get("/users", (req, res) => {
 	});
 });
 
+//get user by _id
 app.get("/users/:id", (req, res) => {
 	var _id = req.params.id;
  
@@ -39,6 +41,7 @@ app.get("/users/:id", (req, res) => {
 	});
 });
 
+//post new user (sign up)
 app.post("/users", (req, res) => {
 	var NewUser = new User({
         _id: req.body.uid,
@@ -57,6 +60,51 @@ app.post("/users", (req, res) => {
     });
 });
 
+//update user profile picture
+app.post("/user/update/profile_pic/:id", (req, res) => {
+	var _id = req.params.id;
+	
+	User.findOneAndUpdate({ _id }, { profile_pic: req.body.profile_pic }).then(doc => {
+		res.send(doc);
+	}).catch(e => {
+		res.send(e);
+	});
+});
+
+//update user bio
+app.post("/user/update/bio/:id", (req, res) => {
+	var _id = req.params.id;
+	
+	User.findOneAndUpdate({ _id }, { bio: req.body.bio }).then(doc => {
+		res.send(doc);
+	}).catch(e => {
+		res.send(e);
+	});
+});
+
+//update user skills 
+app.post("/user/update/skills/:id", (req, res) => {
+	var _id = req.params.id;
+	var new_skill = req.body.skill;
+
+	User.find({_id}).then(doc => {
+		if (doc[0].skills.includes(new_skill)) {
+			User.findOneAndUpdate({ _id }, { $pull: { skills: new_skill } }).then(doc => {
+				res.send(doc);
+			}).catch(e => {
+				res.send(e);
+			});
+		} else {
+			User.findOneAndUpdate({ _id }, { $push: { skills: req.body.skill } }).then(doc => {
+				res.send(doc);
+			}).catch(e => {
+				res.send(e);
+			});
+		}
+	});
+});
+
+//delete user by _id
 app.delete("/users/:id", (req, res) => {
 	var _id = req.params.id;
 
