@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const { User } = require('./db/User');
+const { ProjectModel } = require('./db/Project');
  
 const app = express();
 var port = process.env.PORT || 3100;
@@ -109,6 +110,44 @@ app.delete("/users/:id", (req, res) => {
 	var _id = req.params.id;
 
 	User.find({_id}).remove().then(doc => {
+		res.send(doc);
+	}).catch(e => {
+		res.send(e);
+	});
+});
+
+app.get("/projects", (req, res) => {
+	ProjectModel.find().then(doc => {
+        res.send(doc);
+    }).catch(e => {
+		res.send(e);
+	});
+});
+
+app.post("/project/create", (req, res) => {
+	var d = new Date();
+	var date = `${d.getDate()}-${d.getMonth()+1}-${d.getFullYear()}`;
+	
+	var NewProject = new ProjectModel({
+		teamName: req.body.teamName,
+		members: req.body.members,
+		creationDate: date,
+		activeBugs: [],
+		fixedBugs: []
+	});
+
+	NewProject.save().then((doc) => {
+		res.send(doc);
+	}).catch(e => {
+        res.send(e);
+    });
+});
+
+//delete project by _id
+app.delete("/project/:id", (req, res) => {
+	var _id = req.params.id;
+
+	ProjectModel.find({_id}).remove().then(doc => {
 		res.send(doc);
 	}).catch(e => {
 		res.send(e);
