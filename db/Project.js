@@ -2,7 +2,8 @@ const {mongoose} = require('./mongoose');
 var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
-	teamName: String,
+    teamName: String,
+    teamCode: String,
     members: Array,
     creationDate: String,
     activeBugs: Array,

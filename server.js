@@ -131,13 +131,19 @@ app.post("/project/create", (req, res) => {
 	var NewProject = new ProjectModel({
 		teamName: req.body.teamName,
 		members: req.body.members,
+		teamCode: "",
 		creationDate: date,
 		activeBugs: [],
 		fixedBugs: []
 	});
 
 	NewProject.save().then((doc) => {
-		res.send(doc);
+		var _id = JSON.stringify(doc._id);
+		var teamName = doc.teamName;
+
+		var teamCode = `${teamName[0]}${_id[2]}${_id[15]}${teamName[teamName.length-1]}${_id[20]}${teamName[Math.round(teamName.length/2)]}`;
+		
+		res.send(teamCode.toUpperCase());
 	}).catch(e => {
         res.send(e);
     });
@@ -148,6 +154,15 @@ app.delete("/project/:id", (req, res) => {
 	var _id = req.params.id;
 
 	ProjectModel.find({_id}).remove().then(doc => {
+		res.send(doc);
+	}).catch(e => {
+		res.send(e);
+	});
+});
+
+//delete all projects
+app.delete("/projects", (req, res) => {
+	ProjectModel.find().remove().then(doc => {
 		res.send(doc);
 	}).catch(e => {
 		res.send(e);
