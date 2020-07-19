@@ -141,9 +141,16 @@ app.post("/project/create", (req, res) => {
 		var _id = JSON.stringify(doc._id);
 		var teamName = doc.teamName;
 
-		var teamCode = `${teamName[0]}${_id[2]}${_id[15]}${teamName[teamName.length-1]}${_id[20]}${teamName[Math.round(teamName.length/2)]}`;
-		
-		res.send(teamCode.toUpperCase());
+		ProjectModel.find().then(projects => {
+			var teamCode = `${teamName[0]}${_id[2]}${teamName[teamName.length-1]}${projects.length}`;
+			teamCode = teamCode.toUpperCase();
+			
+			ProjectModel.findOneAndUpdate({_id:doc._id}, {teamCode}).then(updatedDoc => {
+				res.send(updatedDoc);
+			}).catch(e => {
+				res.send(e);
+			});
+		});
 	}).catch(e => {
         res.send(e);
     });
